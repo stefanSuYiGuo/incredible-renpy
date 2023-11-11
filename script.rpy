@@ -3,8 +3,8 @@
 # Declare characters used by this game. The color argument colorizes the
 # name of the character.
 
-define e = Character("Eileen")
-define Dave = Character("Dave")
+define e = Character("Eileen", color = '#ff9900')
+define Dave = Character("Dave", color = '#aaefff')
 
 
 # The game starts here.
@@ -25,16 +25,35 @@ label start:
 
     # These display lines of dialogue.
 
-    Dave "Hi Eileen"
+    e 'Hi Dave, how was your day?'
 
-    e "You've created a new Ren'Py game."
-
-    e "Once you add a story, pictures, and music, you can release it to the world!"
-
-    e "I'm so happy"
-
-    "Have a great day!"
+    menu:
+        'My day was great thank you Eileen':
+            jump GoodDay
+        'My day was not too good':
+            jump BadDay
+        'My day was great, but go to part 2':
+            call GoodDayB
+    
+    'This code is the end of the Start block'
 
     # This ends the game.
 
+    return
+
+
+label GoodDay:
+    e 'I am glad you had a good day'
+    # first bit
+    return
+
+
+label GoodDayB:
+    e 'part 2 of the good day block'
+    # second bit
+    return
+
+
+label BadDay:
+    e 'I am sad that you din not have a good day'
     return
