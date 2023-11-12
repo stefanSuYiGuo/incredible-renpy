@@ -5,6 +5,9 @@
 
 define e = Character("Eileen", color = '#ff9900')
 define Dave = Character("Dave", color = '#aaefff')
+image picture_1 = im.Scale('1.jpg', 1920, 1080)
+image picture_2 = im.Scale('2.jpg', 1920, 1080)
+image picture_3 = im.Scale('3.jpg', 1920, 1080)
 
 
 # The game starts here.
@@ -15,7 +18,11 @@ label start:
     # add a file (named either "bg room.png" or "bg room.jpg") to the
     # images directory to show it.
 
-    scene bg room
+    $ t = 1
+    while t < 3:
+        show expression ("[t].jpg")
+        'click'
+        $ t += 1
 
     # This shows a character sprite. A placeholder is used, but you can
     # replace it by adding a file named "eileen happy.png" to the images
@@ -26,6 +33,9 @@ label start:
     # These display lines of dialogue.
 
     e 'Hi Dave, how was your day?'
+    # For saving memory
+    # hide picture_1
+    show picture_2
 
     menu:
         'My day was great thank you Eileen':
@@ -35,6 +45,10 @@ label start:
         'My day was great, but go to part 2':
             call GoodDayB
     
+    # clear each image before
+    scene
+    # hide picture_2
+    show picture_3
     'This code is the end of the Start block'
 
     # This ends the game.
