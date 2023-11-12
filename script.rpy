@@ -14,15 +14,17 @@ image picture_3 = im.Scale('3.jpg', 1920, 1080)
 
 label start:
 
+    call variables
+
     # Show a background. This uses a placeholder by default, but you can
     # add a file (named either "bg room.png" or "bg room.jpg") to the
     # images directory to show it.
 
-    $ t = 1
-    while t < 3:
-        show expression ("[t].jpg")
-        'click'
-        $ t += 1
+    # $ t = 1
+    # while t < 3:
+    #     show expression ("[t].jpg")
+    #     'click'
+    #     $ t += 1
 
     # This shows a character sprite. A placeholder is used, but you can
     # replace it by adding a file named "eileen happy.png" to the images
@@ -32,7 +34,7 @@ label start:
 
     # These display lines of dialogue.
 
-    e 'Hi Dave, how was your day?'
+    e 'Hi [PlayerName], how was your day?'
     # For saving memory
     # hide picture_1
     show picture_2
@@ -49,7 +51,7 @@ label start:
     scene
     # hide picture_2
     show picture_3
-    'This code is the end of the Start block'
+    'This code is the end of the Start block, your name is still [PlayerName]'
 
     # This ends the game.
 
@@ -57,7 +59,9 @@ label start:
 
 
 label GoodDay:
-    e 'I am glad you had a good day'
+    $ PlayerScore += 1
+    e 'I am glad you had a good day, your score is [PlayerScore]'
+    $ PlayerName += '\nDumbo'
     # first bit
     return
 
@@ -70,4 +74,14 @@ label GoodDayB:
 
 label BadDay:
     e 'I am sad that you din not have a good day'
+    return
+
+
+label variables:
+    $ PlayerScore = 0
+    $ PlayerName = "Dave"
+
+    # if PlayerScore <= 10:
+    #     "Score is [PlayerScore]"
+
     return
