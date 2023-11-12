@@ -6,30 +6,8 @@ image picture_3 = im.Scale('3.jpg', 1920, 1080)
 
 
 label start:
-    
-    call variables
 
-    $ GameRunning = True
-    while GameRunning:
-        $ Output = WeekDays[Day] + " " + Months[Month] + " " + str(Days) + " " + str(Hours).zfill(2) + ":" + str(Minutes).zfill(2)
-        '[Output]'
-        $ Minutes += 30
-        if Minutes == 60:
-            $ Minutes = 0
-            $ Hours += 1
-        if Hours == 24:
-            $ Hours = 0
-            $ Day += 1
-            $ Days += 1
-        if Day == 7:
-            $ Day = 0
-        if Days > MonthDays[Month]:
-            $ Month += 1
-            $ Days = 1
-        if Month == 12:
-            $ Month = 0
-        
-        call EventCheck
+    call Calendar
 
     # clock
     """
@@ -66,6 +44,7 @@ label variables:
     $ Month = 0
     $ Day = 0
     $ Days = 30
+    $ calendar = Calendar(Hours, Minutes, Days, Day, Months, Month, WeekDays, MonthDays)
 
     return
 
@@ -74,3 +53,36 @@ label EventCheck:
     if Hours == 12 and Minutes == 0 and Days == 31 and Month == 0:
         "This is an event"
     return
+
+
+label Calendar:
+    call variables
+
+    $ GameRunning = True
+    while GameRunning:
+        """
+        $ Output = WeekDays[Day] + " " + Months[Month] + " " + str(Days) + " " + str(Hours).zfill(2) + ":" + str(Minutes).zfill(2)
+        '[Output]'
+        $ Minutes += 30
+        if Minutes == 60:
+            $ Minutes = 0
+            $ Hours += 1
+        if Hours == 24:
+            $ Hours = 0
+            $ Day += 1
+            $ Days += 1
+        if Day == 7:
+            $ Day = 0
+        if Days > MonthDays[Month]:
+            $ Month += 1
+            $ Days = 1
+        if Month == 12:
+            $ Month = 0
+        """
+
+        "click"
+        $ calendar.AddTime(1)
+        $ Output = calendar.Output
+        
+        call EventCheck
+    return Output
